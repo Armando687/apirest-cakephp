@@ -24,12 +24,8 @@ class UsersController extends AppController
         $users = $this->paginate($this->Users)->toArray();
         if($this->request->is('get')){
             if(!empty($users)){
-                $json = [
-                    'error' => 0,
-                    'data' => $users
-                ]; 
                 $body = $this->response->getBody();
-                $body->write(json_encode($json));
+                $body->write(json_encode($users));
                 return $this->response->withBody($body);
             }else{
                 $response = $this->response->withStatus('204');
@@ -48,12 +44,10 @@ class UsersController extends AppController
      */
     public function getFindById($id = null)
     {
-        $user = $this->Users->findById($id)->first();       
+        $user = $this->Users->findById($id)->first();
         if ($user) {
-            $json = [
-                'error' => 0,
-                'data'=> $user
-            ];
+            $json = $user;
+            
         } else {
             $json = [
                 'error' => 1,
